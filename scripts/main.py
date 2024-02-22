@@ -1,6 +1,9 @@
+from typing import Iterable, Any
+
 import pygame
 
 from flappy_bird_app import Bird
+
 
 def main() -> None:
 
@@ -20,6 +23,16 @@ def main() -> None:
     #initialise the bird
     bird = Bird()
     bird.start_state()
+    bird_sprite = pygame.image.load('resources/bird.bmp')
+    bird_sprite = pygame.transform.scale(bird_sprite, (game_height * bird.radius * 8/3, game_height * bird.radius * 2))
+
+    #prepare the pipe
+    pipe_body_sprite = pygame.image.load('resources/pipe_body.bmp')
+
+    #prepare the floor
+    floor_sprite = pygame.image.load('resources/floor.bmp')
+    floor_sprite = pygame.transform.scale(floor_sprite, (width, floor_height))
+    floor_rect = floor_sprite.get_rect(topleft=(0,game_height))
 
     while running:
 
@@ -51,14 +64,20 @@ def main() -> None:
         
         #draw the pipes
         for pipe in bird.pipes.items:
-            pygame.draw.rect(screen, 'green', pygame.Rect((width * pipe.position, 0), (width * pipe.width, game_height * pipe.height)))
-            pygame.draw.rect(screen, 'green', pygame.Rect((width * pipe.position, (pipe.height + pipe.gap) * game_height), (width * pipe.width, (1 - pipe.height - pipe.gap) * game_height)))
+            top_pipe_body = pygame.transform.scale(pipe_body_sprite, (width * pipe.width, game_height * pipe.height))
+            bottom_pipe_body = pygame.transform.scale(pipe_body_sprite, (width * pipe.width, (1 - pipe.height - pipe.gap) * game_height))
+            top_pipe_rect = top_pipe_body.get_rect(topleft=(width * pipe.position, 0))
+            bottom_pipe_rect = bottom_pipe_body.get_rect(topleft=(width * pipe.position, (pipe.height + pipe.gap) * game_height))
+            screen.blit(top_pipe_body, top_pipe_rect)
+            screen.blit(bottom_pipe_body, bottom_pipe_rect)
 
         #draw the bird
-        pygame.draw.circle(screen, 'yellow', (width * bird.x, game_height * bird.position), game_height * bird.radius)
+        bird_sprite_rotated = pygame.transform.rotate(bird_sprite, bird.angle)
+        bird_sprite_rect = bird_sprite_rotated.get_rect(center=(width * bird.x, game_height * bird.position))
+        screen.blit(bird_sprite_rotated, bird_sprite_rect)
 
         #draw the floor
-        pygame.draw.rect(screen, 'brown', pygame.Rect((0, game_height), (width, floor_height)))
+        screen.blit(floor_sprite, floor_rect)
 
         #show the score
         score = font.render(f'{bird.score}', True, 'white')
