@@ -5,6 +5,20 @@ import pygame
 from flappy_bird_app import Bird
 
 
+def custom_cycle(items: Iterable[Any], count: int) -> Any:
+    """Performs like itertools.cycle except yields each element count times."""
+
+    saved = []
+    for item in items:
+        for _ in range(count):
+            yield item
+        saved.append(item)
+    while saved:
+        for item in saved:
+            for _ in range(count):
+                yield item
+
+
 def main() -> None:
 
     #pygame setup
@@ -23,8 +37,9 @@ def main() -> None:
     #initialise the bird
     bird = Bird()
     bird.start_state()
-    bird_sprite = pygame.image.load('resources/bird.bmp')
-    bird_sprite = pygame.transform.scale(bird_sprite, (game_height * bird.radius * 8/3, game_height * bird.radius * 2))
+    bird_sprites = [pygame.image.load('resources/bird_1.bmp'), pygame.image.load('resources/bird_2.bmp'), pygame.image.load('resources/bird_3.bmp')]
+    bird_sprites = [pygame.transform.scale(bird_sprite, (game_height * bird.radius * 8/3, game_height * bird.radius * 2)) for bird_sprite in bird_sprites]
+    bird_sprite_numbers = custom_cycle([0, 1, 2, 1], 5)
 
     #prepare the pipe
     pipe_body_sprite = pygame.image.load('resources/pipe_body.bmp')
@@ -72,7 +87,7 @@ def main() -> None:
             screen.blit(bottom_pipe_body, bottom_pipe_rect)
 
         #draw the bird
-        bird_sprite_rotated = pygame.transform.rotate(bird_sprite, bird.angle)
+        bird_sprite_rotated = pygame.transform.rotate(bird_sprites[next(bird_sprite_numbers)], bird.angle)
         bird_sprite_rect = bird_sprite_rotated.get_rect(center=(width * bird.x, game_height * bird.position))
         screen.blit(bird_sprite_rotated, bird_sprite_rect)
 
