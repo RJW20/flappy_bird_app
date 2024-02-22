@@ -36,6 +36,8 @@ class Bird:
 
         self.pipes.start_state()
 
+        self.score = 0
+
     def move(self, move: int) -> None:
         """Flap or don't flap.
         
