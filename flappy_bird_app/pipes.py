@@ -19,7 +19,7 @@ class Pipes:
         Populate deque, set at starting positions.
         """
 
-        self.items = deque([Pipe(0)])
+        self.items = deque([Pipe(1)])
 
     def update(self) -> None:
         """Move the pipes one frame to the left.
