@@ -16,6 +16,8 @@ class Pipe:
         self.gap: float = 0.28
         self.height: float = round(random.uniform(MIN_HEIGHT, 1 - MIN_HEIGHT - self.gap) * 100) / 100
 
+        self.beaten: bool = False
+
     def update(self) -> None:
         """Move pipe by PAN_VELOCITY."""
 
