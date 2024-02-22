@@ -4,7 +4,7 @@ from functools import cached_property
 
 #constants for all instances of Pipe that aren't referenced elsewhere
 MIN_HEIGHT = 0.05
-PAN_VELOCITY = -0.005
+PAN_VELOCITY = -0.006
 
 
 class Pipe:
@@ -13,7 +13,7 @@ class Pipe:
     def __init__(self, position: float) -> None:
         self.position: float = position
         self.width: float = 0.18
-        self.gap: float = 0.28
+        self.gap: float = 0.275
         self.height: float = round(random.uniform(MIN_HEIGHT, 1 - MIN_HEIGHT - self.gap) * 100) / 100
 
         self.beaten: bool = False

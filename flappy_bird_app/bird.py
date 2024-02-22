@@ -2,9 +2,9 @@ from .pipes import Pipes
 
 
 #constants for all instances of Bird that aren't referenced elsewhere
-GRAVITY = 0.00125
-MAX_VELOCITY = 0.02
-JUMP_VELOCITY = -0.0175
+GRAVITY = 0.0013
+MAX_VELOCITY = 0.025
+JUMP_VELOCITY = -0.0185
 JUMP_ANGLE = 20
 ANGULAR_VELOCITY = 5
 
@@ -14,7 +14,7 @@ class Bird:
 
     def __init__(self) -> None:
         self.x: float = 0.3
-        self.radius: float = 0.04
+        self.radius: float = 0.0385
         self.position: float
         self.velocity: float
         self.angle: int
