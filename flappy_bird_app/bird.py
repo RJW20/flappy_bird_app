@@ -67,4 +67,12 @@ class Bird:
         """Return True if collided with floor or pipe."""
 
         #floor
-        return self.position + self.radius > 1
+        if self.position + self.radius > 1:
+            return True
+        
+        #first pipe
+        for point in self.pipes.items[0].boundary:
+            if (point[0] - self.x)**2 + (point[1] - self.position)**2 < self.radius**2:
+                return True
+
+        return False
