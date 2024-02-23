@@ -3,8 +3,8 @@ from collections import deque
 from .pipe import Pipe
 
 
-#constants for all instances of Pipes that aren't referenced elsewhere
-SEPARATOR = 0.6
+#constants for all instances of Pipes
+INTERVAL = 0.6
 
 
 class Pipes:
@@ -32,7 +32,7 @@ class Pipes:
             pipe.update()
 
         if (end_pipe_position := self.items[-1].position) < 1:
-            self.items.append(Pipe(end_pipe_position + SEPARATOR))
+            self.items.append(Pipe(end_pipe_position + INTERVAL))
 
         if self.items[0].position < self.items[0].width * -1:
             self.items.popleft()       
