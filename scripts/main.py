@@ -35,6 +35,10 @@ def main() -> None:
     running = True
     dt = 0
 
+    #initialise the background
+    bg = pygame.image.load('resources/background.bmp')
+    bg = pygame.transform.scale(bg, (width, game_height))
+
     #initialise the bird
     bird = Bird()
     bird.start_state()
@@ -79,7 +83,7 @@ def main() -> None:
             bird.start_state()
 
         #fill the screen to wipe last frame
-        screen.fill((52,225,235))
+        screen.blit(bg, (0,0))
         
         #draw the pipes
         for item in bird.pipes.items:
