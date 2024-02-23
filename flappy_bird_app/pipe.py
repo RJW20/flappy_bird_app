@@ -8,7 +8,13 @@ PAN_VELOCITY = -0.006
 
 
 class Pipe:
-    """A pipe that can kill the bird."""
+    """A pipe that can kill the bird.
+    
+    Will be initialized with a random height ~U[min_height,1-min_height-gap], and have set width.
+    height represents the y-coordinate of the end of the top pipe (coordinates are top-down).
+    width represents the difference in x_cooridinate from left to right of the pipe.
+    position represents the x-coordinate of the left of the pipe.
+    """
 
     def __init__(self, position: float) -> None:
         self.position: float = position
@@ -18,31 +24,13 @@ class Pipe:
 
         self.beaten: bool = False
 
+    @cached_property
+    def bottom_height(self):
+        """The y_coordinate of the end of the bottom pipe."""
+
+        return self.height + self.gap
+
     def update(self) -> None:
         """Move pipe by PAN_VELOCITY."""
 
         self.position += PAN_VELOCITY
-
-    @property
-    def x_range(self) -> list[float]:
-        """List containing the x coordinates of the ends of the pipe."""
-
-        return [x/100 for x in range(round(self.position * 100), round((self.position + self.width) * 100) + 1)]
-    
-    @cached_property
-    def y_range(self) -> list[float]:
-        """List containing the y coordinates of the left edges of the pipe."""
-
-        return [y/100 for y in range(1, 100) if y <= self.height * 100 or y >= (self.height + self.gap) * 100]
-    
-    @property
-    def boundary(self) -> None:
-        """Set of points constituting the boundary of the pipe.
-        
-        Includes the left edge and the ends of the top and bottom pipe.
-        """
-
-        return [(x, self.height) for x in self.x_range] + \
-               [(x, self.height + self.gap) for x in self.x_range] + \
-               [(self.position, y) for y in self.y_range]
-    

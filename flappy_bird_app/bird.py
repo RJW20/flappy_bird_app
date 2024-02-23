@@ -73,8 +73,9 @@ class Bird:
             return True
         
         #first pipe
-        for point in self.pipes.items[0].boundary:
-            if (point[0] - self.x)**2 + (point[1] - self.position)**2 < self.radius**2:
-                return True
+        front_pipe = self.pipes.items[0]
+        if front_pipe.position < self.x + self.radius and self.x - self.radius < front_pipe.position + front_pipe.width:
+            if self.position - self.radius < front_pipe.height or self.position + self.radius > front_pipe.bottom_height:
+                return True 
 
         return False
