@@ -18,9 +18,7 @@ class Bird:
         self.position: float
         self.velocity: float
         self.angle: int
-
         self.pipes: Pipes = Pipes()
-
         self.score: int
 
 

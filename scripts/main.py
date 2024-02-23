@@ -3,6 +3,7 @@ from typing import Iterable, Any
 import pygame
 
 from flappy_bird_app import Bird
+import flappy_bird_app.pipe as pipe
 
 
 def custom_cycle(items: Iterable[Any], count: int) -> Any:
@@ -24,11 +25,11 @@ def main() -> None:
     #pygame setup
     width = 480
     game_height = 620
-    floor_height = game_height * 0.04
-    screen = pygame.display.set_mode((width, game_height + floor_height ))
+    floor_height = 0.04 * game_height
+    screen = pygame.display.set_mode((width, game_height + floor_height))
     pygame.display.set_caption("Flappy Bird")
     pygame.font.init()
-    font_height = int(game_height * 0.08)
+    font_height = int(0.08 * game_height)
     font = pygame.font.Font(pygame.font.get_default_font(), font_height)
     clock = pygame.time.Clock()
     running = True
@@ -38,11 +39,14 @@ def main() -> None:
     bird = Bird()
     bird.start_state()
     bird_sprites = [pygame.image.load('resources/bird_1.bmp'), pygame.image.load('resources/bird_2.bmp'), pygame.image.load('resources/bird_3.bmp')]
-    bird_sprites = [pygame.transform.scale(bird_sprite, (game_height * bird.radius * 8/3, game_height * bird.radius * 2)) for bird_sprite in bird_sprites]
+    bird_sprites = [pygame.transform.scale(bird_sprite, (bird.radius * 8/3 * game_height, bird.radius * 2 * game_height)) for bird_sprite in bird_sprites]
     bird_sprite_numbers = custom_cycle([0, 1, 2, 1], 5)
 
     #prepare the pipe
-    pipe_body_sprite = pygame.image.load('resources/pipe_body.bmp')
+    pipe_top_sprite = pygame.image.load('resources/pipe_top.bmp')
+    pipe_bottom_sprite = pygame.image.load('resources/pipe_bottom.bmp')
+    pipe_top_sprite = pygame.transform.scale(pipe_top_sprite, (pipe.WIDTH * width, (1 - pipe.MIN_HEIGHT - pipe.GAP) * game_height))
+    pipe_bottom_sprite = pygame.transform.scale(pipe_bottom_sprite, (pipe.WIDTH * width, (1 - pipe.MIN_HEIGHT - pipe.GAP) * game_height))
 
     #prepare the floor
     floor_sprite = pygame.image.load('resources/floor.bmp')
@@ -78,17 +82,15 @@ def main() -> None:
         screen.fill((52,225,235))
         
         #draw the pipes
-        for pipe in bird.pipes.items:
-            top_pipe_body = pygame.transform.scale(pipe_body_sprite, (width * pipe.width, game_height * pipe.height))
-            bottom_pipe_body = pygame.transform.scale(pipe_body_sprite, (width * pipe.width, (1 - pipe.height - pipe.gap) * game_height))
-            top_pipe_rect = top_pipe_body.get_rect(topleft=(width * pipe.position, 0))
-            bottom_pipe_rect = bottom_pipe_body.get_rect(topleft=(width * pipe.position, (pipe.height + pipe.gap) * game_height))
-            screen.blit(top_pipe_body, top_pipe_rect)
-            screen.blit(bottom_pipe_body, bottom_pipe_rect)
+        for item in bird.pipes.items:
+            pipe_top_rect = pipe_top_sprite.get_rect(bottomleft=(item.position * width, item.height * game_height))
+            pipe_bottom_rect = pipe_bottom_sprite.get_rect(topleft=(item.position * width, item.bottom_height * game_height))
+            screen.blit(pipe_top_sprite, pipe_top_rect)
+            screen.blit(pipe_bottom_sprite, pipe_bottom_rect)
 
         #draw the bird
         bird_sprite_rotated = pygame.transform.rotate(bird_sprites[next(bird_sprite_numbers)], bird.angle)
-        bird_sprite_rect = bird_sprite_rotated.get_rect(center=(width * bird.x, game_height * bird.position))
+        bird_sprite_rect = bird_sprite_rotated.get_rect(center=(bird.x * width, bird.position * game_height))
         screen.blit(bird_sprite_rotated, bird_sprite_rect)
 
         #draw the floor
@@ -96,7 +98,7 @@ def main() -> None:
 
         #show the score
         score = font.render(f'{bird.score}', True, 'white')
-        score_rect = score.get_rect(center=(width/2, game_height * 0.05))
+        score_rect = score.get_rect(center=(width/2, 0.05 * game_height))
         screen.blit(score, score_rect)
 
         #display the changes
