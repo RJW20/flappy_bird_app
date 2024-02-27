@@ -3,7 +3,8 @@ from typing import Iterable, Any
 import pygame
 
 from flappy_bird_app import Bird
-import flappy_bird_app.pipe as pipe
+import flappy_bird_app.bird as BIRD
+import flappy_bird_app.pipe as PIPE
 
 
 def custom_cycle(items: Iterable[Any], count: int) -> Any:
@@ -43,14 +44,14 @@ def main() -> None:
     bird = Bird()
     bird.start_state()
     bird_sprites = [pygame.image.load('resources/bird_1.bmp'), pygame.image.load('resources/bird_2.bmp'), pygame.image.load('resources/bird_3.bmp')]
-    bird_sprites = [pygame.transform.scale(bird_sprite, (bird.radius * 8/3 * game_height, bird.radius * 2 * game_height)) for bird_sprite in bird_sprites]
+    bird_sprites = [pygame.transform.scale(bird_sprite, (BIRD.radius * 8/3 * game_height, BIRD.radius * 2 * game_height)) for bird_sprite in bird_sprites]
     bird_sprite_numbers = custom_cycle([0, 1, 2, 1], 5)
 
     #prepare the pipe
     pipe_top_sprite = pygame.image.load('resources/pipe_top.bmp')
     pipe_bottom_sprite = pygame.image.load('resources/pipe_bottom.bmp')
-    pipe_top_sprite = pygame.transform.scale(pipe_top_sprite, (pipe.WIDTH * width, (1 - pipe.MIN_HEIGHT - pipe.GAP) * game_height))
-    pipe_bottom_sprite = pygame.transform.scale(pipe_bottom_sprite, (pipe.WIDTH * width, (1 - pipe.MIN_HEIGHT - pipe.GAP) * game_height))
+    pipe_top_sprite = pygame.transform.scale(pipe_top_sprite, (PIPE.WIDTH * width, (1 - PIPE.MIN_HEIGHT - PIPE.GAP) * game_height))
+    pipe_bottom_sprite = pygame.transform.scale(pipe_bottom_sprite, (PIPE.WIDTH * width, (1 - PIPE.MIN_HEIGHT - PIPE.GAP) * game_height))
 
     #prepare the floor
     floor_sprite = pygame.image.load('resources/floor.bmp')
