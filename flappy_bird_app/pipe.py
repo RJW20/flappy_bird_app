@@ -6,7 +6,7 @@ from functools import cached_property
 WIDTH = 0.18
 MIN_HEIGHT = 0.09
 GAP = 0.27
-PAN_VELOCITY = -0.006
+PAN_VELOCITY = -0.0065
 
 
 class Pipe:
