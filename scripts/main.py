@@ -44,7 +44,7 @@ def main() -> None:
     bird = Bird()
     bird.start_state()
     bird_sprites = [pygame.image.load('resources/bird_1.bmp'), pygame.image.load('resources/bird_2.bmp'), pygame.image.load('resources/bird_3.bmp')]
-    bird_sprites = [pygame.transform.scale(bird_sprite, (BIRD.radius * 8/3 * game_height, BIRD.radius * 2 * game_height)) for bird_sprite in bird_sprites]
+    bird_sprites = [pygame.transform.scale(bird_sprite, (BIRD.RADIUS * 8/3 * game_height, BIRD.RADIUS * 2 * game_height)) for bird_sprite in bird_sprites]
     bird_sprite_numbers = custom_cycle([0, 1, 2, 1], 5)
 
     #prepare the pipe
