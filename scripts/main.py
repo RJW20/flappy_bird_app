@@ -34,7 +34,6 @@ def main() -> None:
     font = pygame.font.Font(pygame.font.get_default_font(), font_height)
     clock = pygame.time.Clock()
     running = True
-    dt = 0
 
     #initialise the background
     bg = pygame.image.load('resources/background.bmp')
@@ -110,6 +109,6 @@ def main() -> None:
         pygame.display.flip()
 
         #advance frame
-        dt = clock.tick(60) / 1000
+        clock.tick(60)
 
     pygame.quit()
