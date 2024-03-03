@@ -8,7 +8,7 @@ A python implementation of the game Flappy Bird using [pygame](https://www.pygam
 ## Getting Started
 1. Clone or download the repo `git clone https://github.com/RJW20/flappy_bird_app.git`.
 2. Set up the virtual environment with `poetry install`.
-3. (Optional) Set your desired screen size in scripts/main.py (try to keep a ratio of about 3:4 for width:height for best perfomance).
+3. (Optional) Set your desired screen size in `scripts/main.py` (try to keep a ratio of about 3:4 for width:height for best perfomance).
 4. Run the game with `poetry run main`.
 5. Press space to jump and enjoy!
 
