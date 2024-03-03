@@ -1,8 +1,8 @@
 # Flappy Bird
-A python implementation of the game Flappy Bird using [pygame](https://www.pygame.org/docs/)
+A python implementation of the game Flappy Bird using [pygame](https://www.pygame.org/docs/).
 
 ## Basic Requirements
-1. [Python](https://www.python.org/downloads/)
+1. [Python](https://www.python.org/downloads/).
 2. [Poetry](https://python-poetry.org/docs/) for ease of installing the dependencies.
 
 ## Getting Started
